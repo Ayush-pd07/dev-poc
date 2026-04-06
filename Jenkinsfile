@@ -15,21 +15,19 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Build Stage Running...'
+                sh 'docker build -t ayush-app .'
             }
         }
 
-        stage('Test') {
+        stage('Run Docker Container') {
             steps {
-                echo 'Testing Stage Running...'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deployment Stage Running...'
+                sh '''
+                docker stop ayush-container || true
+                docker rm ayush-container || true
+                docker run -d -p 8081:80 --name ayush-container ayush-app
+                '''
             }
         }
     }
