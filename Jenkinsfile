@@ -2,15 +2,34 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone') {
+
+        stage('Clean Workspace') {
             steps {
-                git 'https://github.com/Ayush-pd07/dev-poc.git'
+                deleteDir()
+            }
+        }
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Ayush-pd07/dev-poc.git'
             }
         }
 
         stage('Build') {
             steps {
-                echo "Building..."
+                echo 'Build Stage Running...'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing Stage Running...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deployment Stage Running...'
             }
         }
     }
